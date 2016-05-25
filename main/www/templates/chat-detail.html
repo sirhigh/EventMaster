@@ -6,9 +6,28 @@
 -->
 <ion-view view-title="{{chat.name}}">
   <ion-content class="padding">
-    <img ng-src="{{chat.face}}" style="width: 64px; height: 64px">
+    <img ng-src="{{chat.face}}" style="width: 355px; height: 200px">
     <p>
-      {{chat.lastText}}
+      {{chat.name}}
     </p>
+
+
+<div class="row" >
+ 
+
+ <div class="col col-50" ng-click = "gotourl('/chats')" >
+  LOCATION <br>
+  {{chat.Location}}
+</div>
+
+
+  <div class="bor col col-50"> DATE 
+  <br>
+  {{chat.Date}}
+ 
+</div>
+</div>
+
+
   </ion-content>
 </ion-view>

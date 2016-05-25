@@ -62,6 +62,8 @@ $ionicConfigProvider.tabs.position('bottom'); //bottom
         }
       }
     })
+
+  // event page
     .state('tab.chat-detail', {
       url: '/chats/:chatId',
       views: {
@@ -83,6 +85,6 @@ $ionicConfigProvider.tabs.position('bottom'); //bottom
   });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
+  $urlRouterProvider.otherwise('/tab/chats');
 
 });
