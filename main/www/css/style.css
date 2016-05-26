@@ -10,9 +10,9 @@
 	height: 500px;
 }
 .bor{
-	border-left:thin solid grey;
+	border-left:1px solid #d3d3d3;
 }
 .col{
-	border-bottom: thin solid grey;
+	border-bottom: 1px solid #d3d3d3;
 
 }
