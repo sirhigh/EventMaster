@@ -19,7 +19,7 @@ angular.module('starter.controllers', [])
     //Wait until the map is loaded
     google.maps.event.addListenerOnce($scope.map, 'idle', function(){
 
-  
+
 
 
 
@@ -65,6 +65,15 @@ angular.module('starter.controllers', [])
       };
 })
 
+.controller('MainCtrl', function($scope, $cordovaCamera) {
+
+})
+
+
+
+
+
+
 .controller('ChatsCtrl', function($scope, Chats,$location) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -86,8 +95,26 @@ angular.module('starter.controllers', [])
 
 
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, $location, Chats) {
+.controller('ChatDetailCtrl', function($scope, $stateParams, $location,$cordovaCamera, Chats) {
+  $scope.takeImage = function() {
+      var options = {
+          quality: 80,
+          destinationType: 0,//Camera.DestinationType.DATA_URL,
+          sourceType: 1,//Camera.PictureSourceType.CAMERA,
+          allowEdit: true,
+          encodingType: 0,//Camera.EncodingType.JPEG,
+          targetWidth: 250,
+          targetHeight: 250,
+          //popoverOptions: CameraPopoverOptions,
+          saveToPhotoAlbum: false
+      };
 
+      $cordovaCamera.getPicture(options).then(function(imageData) {
+          $scope.srcImage = "data:image/jpeg;base64," + imageData;
+      }, function(err) {
+          // error
+      });
+  }
 $scope.gotourl = function(path){
    $location.path(path);
 }

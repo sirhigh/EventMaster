@@ -12,7 +12,7 @@
 <div class="row" >
 
 
- <div class="col col-50" ng-click = "gotourl('/map')" > <i class="icon ion-location" > 
+ <div class="col col-50" ng-click = "gotourl('/map')" > <i class="icon ion-location" >
   <strong>LOCATION </strong></i><br>
   {{chat.Location}}
 </div>
@@ -24,6 +24,10 @@
 
 </div>
 </div>
+
+    <img ng-show="imgURI !== undefined" ng-src="{{imgURI}}">
+    <img ng-show="imgURI === undefined" ng-src="http://placehold.it/300x300">
+    <button class="button" ng-click="takeImage()">Take Picture</button>
 
 
   </ion-content>
