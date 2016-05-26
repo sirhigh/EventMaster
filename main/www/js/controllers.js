@@ -2,7 +2,75 @@ angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope) {})
 
+.controller('MapCtrl', function($scope, $state, $cordovaGeolocation) {
+  var options = {timeout: 10000, enableHighAccuracy: true};
 
+  $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+    var EventmyLatlng = new google.maps.LatLng(13.1704468,-59.6357891); //Sandy Lane Golf Course
+    var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+    var mapOptions = {
+      center: latLng,
+      zoom: 13,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+
+    $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    //Wait until the map is loaded
+    google.maps.event.addListenerOnce($scope.map, 'idle', function(){
+
+      var marker = new google.maps.Marker({
+          map: $scope.map,
+          animation: google.maps.Animation.DROP,
+          position: EventmyLatlng
+      });
+      var marker = new google.maps.Marker({
+          map: $scope.map,
+          animation: google.maps.Animation.DROP,
+          position: latLng
+      });
+
+      var directionsService = new google.maps.DirectionsService();
+        var directionsDisplay = new google.maps.DirectionsRenderer();
+
+
+
+         var request = {
+            origin : latLng,
+            destination : EventmyLatlng,
+            travelMode : google.maps.TravelMode.WALKING
+        };
+        directionsService.route(request, function(response, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
+                directionsDisplay.setDirections(response);
+            }
+        });
+
+           directionsDisplay.setMap(map);
+    });
+  },
+  function(error){
+    console.log("Could not get location");
+  });
+
+  $scope.centerOnMe = function() {
+          if(!$scope.map) {
+              return;
+          }
+
+          $ionicLoading.show({
+            content: 'Getting current location...',
+            showBackdrop: false
+          });
+
+          navigator.geolocation.getCurrentPosition(function(pos) {
+            $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+            $ionicLoading.hide();
+          }, function(error) {
+            alert('Unable to get location: ' + error.message);
+          });
+      };
+})
 
 .controller('ChatsCtrl', function($scope, Chats,$location) {
   // With the new view caching in Ionic, Controllers are only called
